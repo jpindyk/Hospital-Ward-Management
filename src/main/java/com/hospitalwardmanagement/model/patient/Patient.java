@@ -1,5 +1,6 @@
 package com.hospitalwardmanagement.model.patient;
 
+import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
 import com.hospitalwardmanagement.model.patientObservationList.PatientObservationLists;
@@ -68,5 +69,8 @@ public class Patient {
     @JoinColumn(name = "hospital_room_id")
     HospitalRoom hospitalRoom;
 
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    Doctor doctor;
 
 }
