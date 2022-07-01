@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PatientObservationLists {
+public class PatientObservationList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

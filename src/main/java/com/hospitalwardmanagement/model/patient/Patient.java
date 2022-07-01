@@ -3,7 +3,7 @@ package com.hospitalwardmanagement.model.patient;
 import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
-import com.hospitalwardmanagement.model.patientObservationList.PatientObservationLists;
+import com.hospitalwardmanagement.model.patientObservationList.PatientObservationList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -58,12 +58,18 @@ public class Patient {
     Date creationDate;
     @UpdateTimestamp
     Date updateDate;
+    @AttributeOverrides({
+            @AttributeOverride(name = "firstName", column = @Column(name = "CONTACT_PERSON_FIRST_NAME")),
+            @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
+            @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
+    })
+    ContactPerson contactPerson;
 
     @OneToOne
     @JoinColumn(name = "health_questionnaire_id")
     HealthQuestionnaire healthQuestionnaire;
     @OneToMany(mappedBy = "patient")
-    List<PatientObservationLists> patientObservationListsList;
+    List<PatientObservationList> patientObservationListsList;
 
     @ManyToOne
     @JoinColumn(name = "hospital_room_id")
