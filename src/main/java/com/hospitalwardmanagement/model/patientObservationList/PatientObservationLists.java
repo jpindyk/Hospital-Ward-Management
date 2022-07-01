@@ -1,4 +1,4 @@
-package com.hospitalwardmanagement.model.hospitalroom;
+package com.hospitalwardmanagement.model.patientObservationList;
 
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
@@ -11,18 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "hospital_beds")
-public class HospitalBed {
+public class PatientObservationLists {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    String bloodPressure;
+    String bodyTemperature;
+    String shortSummary;
     @ManyToOne
-    HospitalRoom hospitalRoom;
-    public String getHospitalBedSymbol() {
-        return hospitalRoom.name + id;
-    }
-    boolean isEmpty;
-
-    @OneToOne
+    @JoinColumn(name = "patient_id")
     Patient patient;
+
 }

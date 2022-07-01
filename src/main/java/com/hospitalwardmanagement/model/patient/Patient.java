@@ -1,6 +1,8 @@
 package com.hospitalwardmanagement.model.patient;
 
+import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
+import com.hospitalwardmanagement.model.patientObservationList.PatientObservationLists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,12 +14,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "patients")
+@Table(
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"pesel"})}
+)
 public class Patient {
 
     @Id
@@ -53,7 +58,15 @@ public class Patient {
     @UpdateTimestamp
     Date updateDate;
 
+    @OneToOne
+    @JoinColumn(name = "health_questionnaire_id")
+    HealthQuestionnaire healthQuestionnaire;
+    @OneToMany(mappedBy = "patient")
+    List<PatientObservationLists> patientObservationListsList;
+
     @ManyToOne
+    @JoinColumn(name = "hospital_room_id")
     HospitalRoom hospitalRoom;
+
 
 }

@@ -10,17 +10,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
     String firstName;
     String lastName;
+
+
     public String getLogin () {
-        return firstName.substring(0,2) + lastName.substring(0,2);
+        return firstName.substring(0,1) + lastName;
     }
+
     @Enumerated (EnumType.STRING)
     UserRole userRole;
 

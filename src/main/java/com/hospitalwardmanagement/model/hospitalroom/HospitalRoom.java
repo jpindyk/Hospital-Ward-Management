@@ -6,15 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "hospital_rooms")
 public class HospitalRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +20,7 @@ public class HospitalRoom {
     Byte capacity;
     Byte amountOfPatients;
     boolean isRoomFull;
-
-    @OneToMany
-    List<HospitalBed> hospitalBeds;
-    @OneToMany
+    @OneToMany(mappedBy = "hospitalRoom")
     List<Patient> patients;
-
 
 }
