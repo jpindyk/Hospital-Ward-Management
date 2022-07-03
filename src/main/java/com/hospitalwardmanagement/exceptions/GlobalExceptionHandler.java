@@ -1,6 +1,5 @@
 package com.hospitalwardmanagement.exceptions;
 
-import org.springframework.data.jpa.repository.query.Jpa21Utils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

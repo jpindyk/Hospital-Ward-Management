@@ -12,7 +12,7 @@ public interface DoctorService {
     Doctor getDoctorById (Long id);
     List<Doctor> getAllDoctors();
     List<Doctor> getDoctorsBySpecialization(String specialization);
-    List<Doctor> getDoctorByLastName(String lastName);
+    List<Doctor> getDoctorByFirstNameAndLastName(String firstName, String lastName);
 
 
 }
