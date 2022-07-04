@@ -34,6 +34,22 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.NOT_FOUND);
 
     }
+    @ExceptionHandler(HealthQuestionnaireExistsException.class)
+    public ResponseEntity<ErrorObject> handleHealthQuestionnaireExistsException(
+                                        HealthQuestionnaireExistsException exception,
+                                        WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject(
+                                        HttpStatus.CONTINUE.value(),
+                                        exception.getMessage(),
+                                        request.getDescription(false),
+                                        new Date().toString()
+        );
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
+
+    }
+
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorObject> handleMethodArgumentTypeMismatchException(
