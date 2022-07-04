@@ -1,5 +1,6 @@
 package com.hospitalwardmanagement.model.doctor;
 
+import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,7 @@ public class Doctor {
     String specialization;
     @OneToMany (mappedBy = "doctor")
     Set<Patient> patients;
+
+    ObjectAudit objectAudit = new ObjectAudit();
 
 }
