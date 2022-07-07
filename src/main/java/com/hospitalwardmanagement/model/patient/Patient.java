@@ -1,11 +1,13 @@
 package com.hospitalwardmanagement.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
 import com.hospitalwardmanagement.model.patientObservationList.PatientObservationList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,6 +26,8 @@ import java.util.List;
 @Table(
         uniqueConstraints = {@UniqueConstraint(columnNames = {"pesel"})}
 )
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+
 public class Patient {
 
     @Id
@@ -67,6 +71,7 @@ public class Patient {
 
     @OneToOne
     @JoinColumn(name = "health_questionnaire_id")
+    @JsonManagedReference
     HealthQuestionnaire healthQuestionnaire;
     @OneToMany(mappedBy = "patient")
     List<PatientObservationList> patientObservationListsList;
