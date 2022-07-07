@@ -4,11 +4,8 @@ import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 
 public interface HealthQuestionnaireService {
     HealthQuestionnaire addHealthQuestionnaireWithPatientId(HealthQuestionnaire healthQuestionnaire, Long patientId);
-    HealthQuestionnaire updateHealthQuestionnaireById (Long id, HealthQuestionnaire healthQuestionnaire);
-    HealthQuestionnaire updateHealthQuestionnaireByPatientId (Long patientId, HealthQuestionnaire healthQuestionnaire);
-    void deleteHealthQuestionnaireById (Long id);
+    HealthQuestionnaire updateHealthQuestionnaireByPatientId (HealthQuestionnaire healthQuestionnaire, Long patientId);
     void deleteHealthQuestionnaireByPatientId (Long patientId);
-    HealthQuestionnaire getHealthQuestionnaireById(Long id);
     HealthQuestionnaire getHealthQuestionnaireByPatientId(Long patientId);
 
 }
