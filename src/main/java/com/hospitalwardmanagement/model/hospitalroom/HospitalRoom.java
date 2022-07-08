@@ -1,8 +1,11 @@
 package com.hospitalwardmanagement.model.hospitalroom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -12,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class HospitalRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +25,7 @@ public class HospitalRoom {
     @OneToMany(mappedBy = "hospitalRoom")
     List<Patient> patients;
     int amountOfPatients = patients.size();
+
+    @JsonIgnore
+    ObjectAudit objectAudit = new ObjectAudit();
 }
