@@ -18,9 +18,7 @@ public class HospitalRoom {
     Long id;
     String name;
     Byte capacity;
-    Byte amountOfPatients;
-    boolean isRoomFull;
     @OneToMany(mappedBy = "hospitalRoom")
     List<Patient> patients;
-
+    int amountOfPatients = patients.size();
 }
