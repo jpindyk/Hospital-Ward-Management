@@ -5,9 +5,10 @@ import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
 import com.hospitalwardmanagement.repository.HospitalRoomRepository;
 import com.hospitalwardmanagement.service.HospitalRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class HospitalRoomServiceImplementation implements HospitalRoomService {
 
     @Autowired
