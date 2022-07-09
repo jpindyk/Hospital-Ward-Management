@@ -50,9 +50,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
-@ExceptionHandler(HealthQuestionnaireNotExistForPatientException.class)
+@ExceptionHandler(ResourceNotExistForPatientException.class)
     public ResponseEntity<ErrorObject>  handleHealthQuestionnaireNotExistForPatientException(
-                                        HealthQuestionnaireNotExistForPatientException exception,
+                                        ResourceNotExistForPatientException exception,
                                         WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject(
