@@ -5,14 +5,12 @@ import com.hospitalwardmanagement.model.patientObservationList.PatientObservatio
 import java.util.List;
 
 public interface PatientObservationListService {
-    PatientObservationList addPatientObservationList (PatientObservationList patientObservationList);
+    PatientObservationList addPatientObservationList (PatientObservationList patientObservationList, Long patientId);
     PatientObservationList updatePatientObservationListById (Long id, PatientObservationList patientObservationList);
-    List<PatientObservationList> getPatientObservationListById (Long id);
-    List<PatientObservationList> getPatientObservationListByPatientId (Long patientId);
-    List<PatientObservationList> getPatientObservationListByPatientPesel (String pesel);
-    List<PatientObservationList> getPatientObservationListByPatientFirstNameAndLastName(String firstName, String lastName);
+    PatientObservationList getPatientObservationListById (Long id);
+    List<PatientObservationList> getPatientObservationListsByPatientId (Long patientId);
     void deletePatientObservationListById (Long id);
-    void deletePatientObservationListByPatientId (Long patientId);
+    void deletePatientObservationListsByPatientId (Long patientId);
 
 
 }

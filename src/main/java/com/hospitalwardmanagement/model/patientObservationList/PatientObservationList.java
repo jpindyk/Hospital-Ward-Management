@@ -1,5 +1,7 @@
 package com.hospitalwardmanagement.model.patientObservationList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +27,9 @@ public class PatientObservationList {
     @ManyToOne
     @JoinColumn(name = "patient_id")
     Patient patient;
+
+    @JsonIgnore
+    ObjectAudit objectAudit = new ObjectAudit();
+
 
 }
