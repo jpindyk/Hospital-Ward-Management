@@ -14,6 +14,5 @@ import javax.validation.constraints.Digits;
 public class ContactPerson {
     String firstName;
     String lastName;
-    @Digits(integer = 9, fraction = 0)
     String phoneNumber;
 }

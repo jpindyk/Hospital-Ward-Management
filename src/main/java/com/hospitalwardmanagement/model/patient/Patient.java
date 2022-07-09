@@ -1,6 +1,8 @@
 package com.hospitalwardmanagement.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
@@ -51,17 +53,12 @@ public class Patient {
     Address correspondenceAddress;
     @PESEL
     String pesel;
-    @Digits(integer = 9, fraction = 0)
     String phoneNumber;
     @Email
     String email;
     String job;
     @Enumerated(EnumType.STRING)
     MaritalStatus maritalStatus;
-    @CreationTimestamp
-    Date creationDate;
-    @UpdateTimestamp
-    Date updateDate;
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "CONTACT_PERSON_FIRST_NAME")),
             @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
@@ -74,7 +71,7 @@ public class Patient {
     @JsonManagedReference
     HealthQuestionnaire healthQuestionnaire;
     @OneToMany(mappedBy = "patient")
-    List<PatientObservationList> patientObservationListsList;
+    List<PatientObservationList> patientObservationLists;
 
     @ManyToOne
     @JoinColumn(name = "hospital_room_id")
@@ -83,5 +80,8 @@ public class Patient {
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     Doctor doctor;
+
+    @JsonIgnore
+    ObjectAudit objectAudit = new ObjectAudit();
 
 }
