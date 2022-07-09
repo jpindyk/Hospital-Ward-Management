@@ -1,7 +1,7 @@
 package com.hospitalwardmanagement.service.implementation;
 
 import com.hospitalwardmanagement.exceptions.HealthQuestionnaireExistsException;
-import com.hospitalwardmanagement.exceptions.HealthQuestionnaireNotExistForPatientException;
+import com.hospitalwardmanagement.exceptions.ResourceNotExistForPatientException;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.patient.Patient;
@@ -43,7 +43,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         Patient patient = getPatient(patientId);
 
         if(patient.getHealthQuestionnaire()==null)
-            throw new HealthQuestionnaireNotExistForPatientException(patientId);
+            throw new ResourceNotExistForPatientException("Health Questionnaire", patientId);
 
         Long existingHealthQuestionnaireId = patient.getHealthQuestionnaire().getId();
         HealthQuestionnaire existingHealthQuestionnaire = getHealthQuestionnaireById(existingHealthQuestionnaireId);
@@ -59,7 +59,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
     public void deleteHealthQuestionnaireByPatientId(Long patientId) {
         Patient patient = getPatient(patientId);
         if(patient.getHealthQuestionnaire()==null)
-            throw new HealthQuestionnaireNotExistForPatientException(patientId);
+            throw new ResourceNotExistForPatientException("Health Questionnaire", patientId);
 
         patient.setHealthQuestionnaire(null);
 
@@ -72,7 +72,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
     public HealthQuestionnaire getHealthQuestionnaireByPatientId(Long patientId) {
         Patient patient = getPatient(patientId);
         if(patient.getHealthQuestionnaire()==null)
-            throw new HealthQuestionnaireNotExistForPatientException(patientId);
+            throw new ResourceNotExistForPatientException("Health Questionnaire", patientId);
 
         Long existingHealthQuestionnaireId = patient.getHealthQuestionnaire().getId();
         return getHealthQuestionnaireById(existingHealthQuestionnaireId);
