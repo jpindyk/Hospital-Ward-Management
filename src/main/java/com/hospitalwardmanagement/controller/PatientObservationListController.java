@@ -34,8 +34,8 @@ public class PatientObservationListController {
         return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(id, patientObservationList), HttpStatus.OK);
     }
 
-    @GetMapping("/patient/{patienId}")
-    public ResponseEntity<List<PatientObservationList>> getPatientObservationListsByPatientId (Long patientId) {
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<PatientObservationList>> getPatientObservationListsByPatientId (@PathVariable Long patientId) {
         return new ResponseEntity<List<PatientObservationList>>(service.getPatientObservationListsByPatientId(patientId), HttpStatus.OK);
     }
 
@@ -45,9 +45,9 @@ public class PatientObservationListController {
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/patient/{patienId}")
-    public ResponseEntity<PatientObservationList> deletePatientObservationListsByPatientId (@PathVariable Long patienId) {
-        service.deletePatientObservationListsByPatientId(patienId);
+    @DeleteMapping("/patient/{patientId}")
+    public ResponseEntity<PatientObservationList> deletePatientObservationListsByPatientId (@PathVariable Long patientId) {
+        service.deletePatientObservationListsByPatientId(patientId);
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
     }
 
