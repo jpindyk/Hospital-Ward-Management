@@ -24,7 +24,6 @@ public class HospitalRoom {
     Byte capacity;
     @OneToMany(mappedBy = "hospitalRoom")
     List<Patient> patients;
-    int amountOfPatients = patients.size();
 
     @JsonIgnore
     ObjectAudit objectAudit = new ObjectAudit();
