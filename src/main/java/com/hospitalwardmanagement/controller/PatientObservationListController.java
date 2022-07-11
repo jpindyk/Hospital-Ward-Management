@@ -16,9 +16,9 @@ public class PatientObservationListController {
     @Autowired
     PatientObservationListService service;
 
-    @PostMapping
+    @PostMapping("/patient/{patientId}")
     public ResponseEntity<PatientObservationList> addPatientObservationList (@RequestBody PatientObservationList patientObservationList,
-                                                                             Long patientId) {
+                                                                             @PathVariable Long patientId) {
         return new ResponseEntity<PatientObservationList>(service.addPatientObservationList(patientObservationList, patientId), HttpStatus.CREATED);
     }
 
@@ -29,9 +29,8 @@ public class PatientObservationListController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PatientObservationList> getPatientObservationList (@RequestBody PatientObservationList patientObservationList,
-                                                                             @PathVariable  Long id) {
-        return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(id, patientObservationList), HttpStatus.OK);
+    public ResponseEntity<PatientObservationList> getPatientObservationList (@PathVariable  Long id) {
+        return new ResponseEntity<PatientObservationList>(service.getPatientObservationListById(id), HttpStatus.OK);
     }
 
     @GetMapping("/patient/{patientId}")
