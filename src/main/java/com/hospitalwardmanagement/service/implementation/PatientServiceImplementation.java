@@ -89,7 +89,7 @@ public class PatientServiceImplementation implements PatientService {
         HospitalRoom hospitalRoom = hospitalRoomRepository.findById(hospitalRoomId).orElseThrow(
                 () -> new ResourceNotFoundException("HospitalRoom", "id", hospitalRoomId)
         );
-        if (hospitalRoom.getCapacity() <= hospitalRoom.getPatients().size())
+        if (hospitalRoom.getCapacity() <= patientRepository.patientsAmountInHospitalRoom(hospitalRoomId))
             throw new HospitalRoomFullException(hospitalRoomId);
 
         patient.setHospitalRoom(hospitalRoom);
