@@ -47,7 +47,7 @@ public class PatientController {
     }
 
     @GetMapping("/room")
-    public ResponseEntity<List<Patient>> getPatientsByHospitalRoom(@RequestParam Long hospitalRoomId) {
+    public ResponseEntity<List<Patient>> getPatientsByHospitalRoom(@RequestParam(name = "room ") Long hospitalRoomId) {
         return new ResponseEntity<List<Patient>>(patientService.getPatientsByHospitalRoom(hospitalRoomId), HttpStatus.OK);
     }
 
