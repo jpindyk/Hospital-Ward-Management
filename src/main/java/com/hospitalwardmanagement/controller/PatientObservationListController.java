@@ -16,16 +16,16 @@ public class PatientObservationListController {
     @Autowired
     PatientObservationListService service;
 
-    @PostMapping("/patient/{patientId}")
+    @PostMapping()
     public ResponseEntity<PatientObservationList> addPatientObservationList (@RequestBody PatientObservationList patientObservationList,
-                                                                             @PathVariable Long patientId) {
+                                                                             @RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<PatientObservationList>(service.addPatientObservationList(patientObservationList, patientId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     public ResponseEntity<PatientObservationList> updatePatientObservationList (@RequestBody PatientObservationList patientObservationList,
-                                                                             @PathVariable Long id) {
-        return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(id, patientObservationList), HttpStatus.OK);
+                                                                                @RequestParam(name = "patient") Long patientId) {
+        return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(patientId, patientObservationList), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -33,8 +33,8 @@ public class PatientObservationListController {
         return new ResponseEntity<PatientObservationList>(service.getPatientObservationListById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<PatientObservationList>> getPatientObservationListsByPatientId (@PathVariable Long patientId) {
+    @GetMapping()
+    public ResponseEntity<List<PatientObservationList>> getPatientObservationListsByPatientId (@RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<List<PatientObservationList>>(service.getPatientObservationListsByPatientId(patientId), HttpStatus.OK);
     }
 
@@ -44,8 +44,8 @@ public class PatientObservationListController {
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/patient/{patientId}")
-    public ResponseEntity<PatientObservationList> deletePatientObservationListsByPatientId (@PathVariable Long patientId) {
+    @DeleteMapping()
+    public ResponseEntity<PatientObservationList> deletePatientObservationListsByPatientId (@RequestParam(name = "patient") Long patientId) {
         service.deletePatientObservationListsByPatientId(patientId);
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
     }
