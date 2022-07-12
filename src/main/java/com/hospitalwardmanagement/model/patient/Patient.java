@@ -1,6 +1,8 @@
 package com.hospitalwardmanagement.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.doctor.Doctor;
@@ -11,14 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
-import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -29,7 +27,6 @@ import java.util.List;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"pesel"})}
 )
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-
 public class Patient {
 
     @Id
@@ -51,7 +48,7 @@ public class Patient {
             @AttributeOverride(name = "postalCode", column = @Column(name = "CORRESPONDENCE_POSTAL_CODE"))
     })
     Address correspondenceAddress;
-    @PESEL
+    //@PESEL
     String pesel;
     String phoneNumber;
     @Email
@@ -70,7 +67,9 @@ public class Patient {
     @JoinColumn(name = "health_questionnaire_id")
     @JsonManagedReference
     HealthQuestionnaire healthQuestionnaire;
+
     @OneToMany(mappedBy = "patient")
+    @JsonManagedReference
     List<PatientObservationList> patientObservationLists;
 
     @ManyToOne

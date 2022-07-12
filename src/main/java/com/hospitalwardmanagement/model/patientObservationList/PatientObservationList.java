@@ -1,5 +1,6 @@
 package com.hospitalwardmanagement.model.patientObservationList;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.patient.Patient;
@@ -24,6 +25,7 @@ public class PatientObservationList {
     String shortSummary;
     @ManyToOne
     @JoinColumn(name = "patient_id")
+    @JsonBackReference
     Patient patient;
 
     @JsonIgnore

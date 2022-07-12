@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -21,9 +21,10 @@ public class HospitalRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    Byte capacity;
+    Integer capacity;
     @OneToMany(mappedBy = "hospitalRoom")
-    List<Patient> patients;
+    @JsonIgnore
+    Set<Patient> patients;
 
     @JsonIgnore
     ObjectAudit objectAudit = new ObjectAudit();

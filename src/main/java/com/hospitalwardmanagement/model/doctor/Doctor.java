@@ -1,6 +1,8 @@
 package com.hospitalwardmanagement.model.doctor;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
@@ -21,7 +23,8 @@ public class Doctor {
     String firstName;
     String lastName;
     String specialization;
-    @OneToMany (mappedBy = "doctor")
+    @OneToMany (mappedBy = "doctor", fetch = FetchType.LAZY)
+    @JsonIgnore
     Set<Patient> patients;
 
     @JsonIgnore
