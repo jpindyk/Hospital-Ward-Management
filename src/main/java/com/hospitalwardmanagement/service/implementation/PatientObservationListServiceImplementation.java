@@ -25,7 +25,7 @@ public class PatientObservationListServiceImplementation implements PatientObser
     public PatientObservationList addPatientObservationList(PatientObservationList patientObservationList, Long patientId) {
         Patient patient = getPatient(patientId);
         patient.getPatientObservationLists().add(patientObservationList);
-
+        patientObservationList.setPatient(patient);
         return repository.save(patientObservationList);
     }
 
