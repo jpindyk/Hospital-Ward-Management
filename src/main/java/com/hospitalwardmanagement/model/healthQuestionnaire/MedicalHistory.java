@@ -18,7 +18,7 @@ public class MedicalHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String disease;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "health_questionnaire_id")
     @JsonBackReference
     HealthQuestionnaire healthQuestionnaire;
