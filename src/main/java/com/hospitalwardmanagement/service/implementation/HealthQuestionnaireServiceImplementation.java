@@ -56,7 +56,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         existingHealthQuestionnaire.setWeight(healthQuestionnaire.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaire.getWeight());
 
         int amountMH = healthQuestionnaire.getMedicalHistories().size();
-        if(healthQuestionnaire.getMedicalHistories()==null) {
+        if(healthQuestionnaire.getMedicalHistories().isEmpty()) {
             existingHealthQuestionnaire.setMedicalHistories(existingHealthQuestionnaire.getMedicalHistories());
         } else
             for (int i = 0; i<amountMH; i++) {
