@@ -24,12 +24,15 @@ public class HealthQuestionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @OneToOne
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "patient_id")
     @JsonBackReference
     Patient patient;
+
     Long height;
     Long weight;
+
     @OneToMany(mappedBy = "healthQuestionnaire", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     List<MedicalHistory> medicalHistories;

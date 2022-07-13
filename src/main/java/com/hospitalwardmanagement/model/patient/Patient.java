@@ -63,8 +63,7 @@ public class Patient {
     })
     ContactPerson contactPerson;
 
-    @OneToOne
-    @JoinColumn(name = "health_questionnaire_id")
+    @OneToOne (mappedBy = "patient", orphanRemoval = true)
     @JsonManagedReference
     HealthQuestionnaire healthQuestionnaire;
 
