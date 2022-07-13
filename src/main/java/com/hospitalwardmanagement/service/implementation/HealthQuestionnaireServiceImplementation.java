@@ -4,12 +4,16 @@ import com.hospitalwardmanagement.exceptions.HealthQuestionnaireExistsException;
 import com.hospitalwardmanagement.exceptions.ResourceNotExistForPatientException;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
+import com.hospitalwardmanagement.model.healthQuestionnaire.MedicalHistory;
 import com.hospitalwardmanagement.model.patient.Patient;
 import com.hospitalwardmanagement.repository.HealthQuestionnaireRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.HealthQuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class HealthQuestionnaireServiceImplementation implements HealthQuestionnaireService {
@@ -50,8 +54,14 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
 
         existingHealthQuestionnaire.setHeight(healthQuestionnaire.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaire.getHeight());
         existingHealthQuestionnaire.setWeight(healthQuestionnaire.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaire.getWeight());
-        existingHealthQuestionnaire.setMedicalHistories(healthQuestionnaire.getMedicalHistories() == null ? existingHealthQuestionnaire.getMedicalHistories() : healthQuestionnaire.getMedicalHistories());
 
+        int amountMH = healthQuestionnaire.getMedicalHistories().size();
+        if(healthQuestionnaire.getMedicalHistories()==null) {
+            existingHealthQuestionnaire.setMedicalHistories(existingHealthQuestionnaire.getMedicalHistories());
+        } else
+            for (int i = 0; i<amountMH; i++) {
+                existingHealthQuestionnaire.getMedicalHistories().get(i).setDisease(healthQuestionnaire.getMedicalHistories().get(i).getDisease());
+            }
         return questionnaireRepository.save(existingHealthQuestionnaire);
     }
 
@@ -61,10 +71,10 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         if(patient.getHealthQuestionnaire()==null)
             throw new ResourceNotExistForPatientException("Health Questionnaire", patientId);
 
-        patient.setHealthQuestionnaire(null);
 
         HealthQuestionnaire healthQuestionnaireToDelete = getHealthQuestionnaireByPatientId(patientId);
         questionnaireRepository.delete(healthQuestionnaireToDelete);
+        patient.setHealthQuestionnaire(null);
     }
 
 
