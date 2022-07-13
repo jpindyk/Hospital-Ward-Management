@@ -3,6 +3,7 @@ package com.hospitalwardmanagement.service.implementation;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.repository.DoctorRepository;
+import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ public class DoctorServiceImplementation implements DoctorService {
 
     @Autowired
     DoctorRepository doctorRepository;
+
+    @Autowired
+    PatientRepository patientRepository;
 
     @Override
     public Doctor addDoctor(@Valid @RequestBody Doctor doctor) {
@@ -36,6 +40,7 @@ public class DoctorServiceImplementation implements DoctorService {
 
     @Override
     public void deleteDoctorById(Long id) {
+        patientRepository.patientsTreatByDoctor(id).stream().forEach(p->p.setDoctor(null));
         Doctor doctorToDelete = getDoctorById(id);
         doctorRepository.delete(doctorToDelete);
     }

@@ -75,7 +75,7 @@ public class Patient {
     @JoinColumn(name = "hospital_room_id")
     HospitalRoom hospitalRoom;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "doctor_id")
     Doctor doctor;
 

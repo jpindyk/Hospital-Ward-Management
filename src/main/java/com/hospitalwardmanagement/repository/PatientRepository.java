@@ -16,5 +16,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query(value = "select count (p) from Patient p where p.hospitalRoom.id =:hospitalRoomId")
     Long patientsAmountInHospitalRoom (@Param("hospitalRoomId")Long hospitalRoomId);
+    @Query(value = "select p from Patient p where p.doctor.id =:doctorId")
+    List<Patient> patientsTreatByDoctor (@Param("doctorId")Long doctorId);
+    @Query(value = "select p from Patient p where p.hospitalRoom.id =:hospitalRoomId")
+    List<Patient> patientsInHospitalRoom (@Param("hospitalRoomId")Long hospitalRoomId);
 
 }
