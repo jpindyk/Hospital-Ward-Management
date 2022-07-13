@@ -25,7 +25,7 @@ public class HealthQuestionnaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id")
     @JsonBackReference
     Patient patient;
