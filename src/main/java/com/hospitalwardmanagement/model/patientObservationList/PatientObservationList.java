@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @NoArgsConstructor
@@ -22,6 +23,7 @@ public class PatientObservationList {
     Long id;
     String bloodPressure;
     String bodyTemperature;
+    @Size(min=25, message = "Summary should have at least 25 characters")
     String shortSummary;
     @ManyToOne
     @JoinColumn(name = "patient_id")

@@ -17,6 +17,8 @@ import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -32,7 +34,9 @@ public class Patient {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     Long id;
+    @NotBlank
     String firstName;
+    @NotBlank
     String LastName;
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
@@ -40,6 +44,7 @@ public class Patient {
             @AttributeOverride(name = "apartmentNo", column = @Column(name = "HOME_APARTMENT_NO")),
             @AttributeOverride(name = "postalCode", column = @Column(name = "HOME_POSTAL_CODE"))
     })
+    @NotBlank
     Address homeAddress;
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "CORRESPONDENCE_CITY")),
@@ -48,8 +53,9 @@ public class Patient {
             @AttributeOverride(name = "postalCode", column = @Column(name = "CORRESPONDENCE_POSTAL_CODE"))
     })
     Address correspondenceAddress;
-    //@PESEL
+    @PESEL
     String pesel;
+    @Pattern(regexp = "^\\d{9}$", message = "Phone Number should have 9 numbers")
     String phoneNumber;
     @Email
     String email;
@@ -61,6 +67,7 @@ public class Patient {
             @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
     })
+    @NotBlank
     ContactPerson contactPerson;
 
     @OneToOne (mappedBy = "patient", orphanRemoval = true)

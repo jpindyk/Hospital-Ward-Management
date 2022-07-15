@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,7 @@ public class HospitalRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
+    @Size(min = 3, max = 10, message = "Hospital Room should have at least 3 beds and max 10 beds")
     Integer capacity;
     @OneToMany(mappedBy = "hospitalRoom")
     @JsonIgnore
