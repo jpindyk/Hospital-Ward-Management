@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -22,7 +24,8 @@ public class HospitalRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    @Size(min = 3, max = 10, message = "Hospital Room should have at least 3 beds and max 10 beds")
+    @Min(value = 3, message = "Hospital room must have at least 3 beds")
+    @Max(value = 10, message = "Hospital room must have maximum 10 beds")
     Integer capacity;
     @OneToMany(mappedBy = "hospitalRoom")
     @JsonIgnore

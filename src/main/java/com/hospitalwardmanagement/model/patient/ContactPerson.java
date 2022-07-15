@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
-import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Embeddable
@@ -13,7 +13,9 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ContactPerson {
+    @NotBlank
     String firstName;
+    @NotBlank
     String lastName;
     @Pattern(regexp = "^\\d{9}$", message = "Phone Number should have 9 numbers")
     String phoneNumber;

@@ -16,8 +16,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.pl.PESEL;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
@@ -39,12 +41,12 @@ public class Patient {
     @NotBlank
     String LastName;
     @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
+            @AttributeOverride(name = "city",column = @Column(name = "HOME_CITY")),
             @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
             @AttributeOverride(name = "apartmentNo", column = @Column(name = "HOME_APARTMENT_NO")),
             @AttributeOverride(name = "postalCode", column = @Column(name = "HOME_POSTAL_CODE"))
     })
-    @NotBlank
+    @Valid
     Address homeAddress;
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "CORRESPONDENCE_CITY")),
@@ -67,7 +69,7 @@ public class Patient {
             @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
     })
-    @NotBlank
+    @Valid
     ContactPerson contactPerson;
 
     @OneToOne (mappedBy = "patient", orphanRemoval = true)

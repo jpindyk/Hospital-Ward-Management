@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class HospitalRoomController {
     HospitalRoomService hospitalRoomService;
 
     @PostMapping
-    public ResponseEntity<HospitalRoom> addHospitalRoom (@RequestBody HospitalRoom hospitalRoom) {
+    public ResponseEntity<HospitalRoom> addHospitalRoom (@Valid @RequestBody HospitalRoom hospitalRoom) {
         return new ResponseEntity<HospitalRoom>(hospitalRoomService.addHospitalRoom(hospitalRoom), HttpStatus.CREATED);
     }
 
