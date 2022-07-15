@@ -40,7 +40,7 @@ public class DoctorServiceImplementation implements DoctorService {
 
     @Override
     public void deleteDoctorById(Long id) {
-        patientRepository.patientsTreatByDoctor(id).stream().forEach(p->p.setDoctor(null));
+        patientRepository.findByDoctor(id).stream().forEach(p->p.setDoctor(null));
         Doctor doctorToDelete = getDoctorById(id);
         doctorRepository.delete(doctorToDelete);
     }

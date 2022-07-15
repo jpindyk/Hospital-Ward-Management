@@ -67,7 +67,7 @@ public class Patient {
     @JsonManagedReference
     HealthQuestionnaire healthQuestionnaire;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", orphanRemoval = true)
     @JsonManagedReference
     List<PatientObservationList> patientObservationLists;
 
