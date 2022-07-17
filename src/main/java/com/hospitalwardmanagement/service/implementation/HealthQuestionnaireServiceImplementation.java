@@ -4,7 +4,6 @@ import com.hospitalwardmanagement.exceptions.HealthQuestionnaireExistsException;
 import com.hospitalwardmanagement.exceptions.ResourceNotExistForPatientException;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
-import com.hospitalwardmanagement.model.healthQuestionnaire.MedicalHistory;
 import com.hospitalwardmanagement.model.patient.Patient;
 import com.hospitalwardmanagement.repository.HealthQuestionnaireRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
@@ -33,9 +32,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         HealthQuestionnaire newHealthQuestionnaire = healthQuestionnaire;
         newHealthQuestionnaire.setPatient(patient);
 
-        newHealthQuestionnaire.getMedicalHistories().
-                forEach(medicalHistory -> medicalHistory
-                        .setHealthQuestionnaire(healthQuestionnaire));
+
 
         patient.setHealthQuestionnaire(newHealthQuestionnaire);
 
@@ -55,13 +52,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         existingHealthQuestionnaire.setHeight(healthQuestionnaire.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaire.getHeight());
         existingHealthQuestionnaire.setWeight(healthQuestionnaire.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaire.getWeight());
 
-        int amountMH = healthQuestionnaire.getMedicalHistories().size();
-        if(healthQuestionnaire.getMedicalHistories().isEmpty()) {
-            existingHealthQuestionnaire.setMedicalHistories(existingHealthQuestionnaire.getMedicalHistories());
-        } else
-            for (int i = 0; i<amountMH; i++) {
-                existingHealthQuestionnaire.getMedicalHistories().get(i).setDisease(healthQuestionnaire.getMedicalHistories().get(i).getDisease());
-            }
+
         return questionnaireRepository.save(existingHealthQuestionnaire);
     }
 
