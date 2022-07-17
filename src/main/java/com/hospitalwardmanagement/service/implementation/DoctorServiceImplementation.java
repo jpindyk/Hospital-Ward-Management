@@ -2,9 +2,11 @@ package com.hospitalwardmanagement.service.implementation;
 
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.doctor.Doctor;
+import com.hospitalwardmanagement.payload.DoctorDTO;
 import com.hospitalwardmanagement.repository.DoctorRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.DoctorService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +22,25 @@ public class DoctorServiceImplementation implements DoctorService {
     PatientRepository patientRepository;
 
 
+    private ModelMapper mapper;
+
+    public DoctorServiceImplementation(ModelMapper mapper) {
+        this.mapper = mapper;
+    }
+
+
     @Override
-    public Doctor addDoctor(Doctor doctor) {
+    public Doctor addDoctor(DoctorDTO doctorDTO) {
+        Doctor doctor = mapToEntity(doctorDTO);
         return doctorRepository.save(doctor);
     }
 
     @Override
-    public Doctor updateDoctorById(Long id, Doctor doctor) {
+    public Doctor updateDoctorById(Long id, DoctorDTO doctorDTO) {
         Doctor existingDoctor = getDoctorById(id);
-
-        existingDoctor.setSpecialization(doctor.getSpecialization() == null ? existingDoctor.getSpecialization() : doctor.getSpecialization());
+        existingDoctor.setFirstName(doctorDTO.getFirstName());
+        existingDoctor.setLastName(doctorDTO.getLastName());
+        existingDoctor.setSpecialization(doctorDTO.getSpecialization() == null ? existingDoctor.getSpecialization() : doctorDTO.getSpecialization());
 
         return doctorRepository.save(existingDoctor);
     }
@@ -63,5 +74,10 @@ public class DoctorServiceImplementation implements DoctorService {
     @Override
     public List<Doctor> getDoctorByFirstNameAndLastName(String firstName, String lastName) {
         return doctorRepository.findDoctorByFirstNameAndLastName(firstName, lastName);
+    }
+
+    private Doctor mapToEntity (DoctorDTO postDto) {
+        Doctor doctor = mapper.map(postDto, Doctor.class);
+        return doctor;
     }
 }

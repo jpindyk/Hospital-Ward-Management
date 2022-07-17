@@ -1,13 +1,14 @@
 package com.hospitalwardmanagement.service;
 
 import com.hospitalwardmanagement.model.doctor.Doctor;
+import com.hospitalwardmanagement.payload.DoctorDTO;
 
 import java.util.List;
 
 public interface DoctorService {
 
-    Doctor addDoctor(Doctor doctor);
-    Doctor updateDoctorById(Long id, Doctor doctor);
+    Doctor addDoctor(DoctorDTO doctorDTO);
+    Doctor updateDoctorById(Long id, DoctorDTO doctorDTO);
     void deleteDoctorById(Long id);
     Doctor getDoctorById (Long id);
     List<Doctor> getAllDoctors();
