@@ -21,12 +21,8 @@ public class DoctorServiceImplementation implements DoctorService {
     @Autowired
     PatientRepository patientRepository;
 
-
-    private ModelMapper mapper;
-
-    public DoctorServiceImplementation(ModelMapper mapper) {
-        this.mapper = mapper;
-    }
+    @Autowired
+    ModelMapper mapper;
 
 
     @Override
