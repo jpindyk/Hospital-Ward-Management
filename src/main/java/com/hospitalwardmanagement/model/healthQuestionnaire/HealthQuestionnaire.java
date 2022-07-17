@@ -20,18 +20,18 @@ import javax.validation.constraints.NotBlank;
 public class HealthQuestionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "patient_id")
     @JsonBackReference
-    Patient patient;
+    private Patient patient;
 
-    Long height;
-    Long weight;
+    private Long height;
+    private Long weight;
     @NotBlank
-    String historyOfDiseases;
+    private String historyOfDiseases;
 
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 }

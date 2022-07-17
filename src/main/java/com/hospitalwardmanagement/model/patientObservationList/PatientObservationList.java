@@ -20,18 +20,18 @@ import javax.validation.constraints.Size;
 public class PatientObservationList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String bloodPressure;
-    String bodyTemperature;
+    private Long id;
+    private String bloodPressure;
+    private String bodyTemperature;
     @Size(min=25, message = "Summary should have at least 25 characters")
-    String shortSummary;
+    private String shortSummary;
     @ManyToOne
     @JoinColumn(name = "patient_id")
     @JsonBackReference
-    Patient patient;
+    private Patient patient;
 
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 
 
 }

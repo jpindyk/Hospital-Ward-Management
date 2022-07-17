@@ -13,12 +13,12 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class Address {
     @NotBlank
-    String city;
+    private String city;
     @NotBlank
-    String street;
+    private String street;
     @NotBlank
-    String apartmentNo;
+    private String apartmentNo;
     @NotBlank
-    String postalCode;
+    private String postalCode;
 
 }

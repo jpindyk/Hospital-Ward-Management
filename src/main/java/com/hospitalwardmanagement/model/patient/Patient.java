@@ -1,8 +1,6 @@
 package com.hospitalwardmanagement.model.patient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hospitalwardmanagement.model.ObjectAudit;
 import com.hospitalwardmanagement.model.doctor.Doctor;
@@ -19,7 +17,6 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
@@ -35,11 +32,11 @@ public class Patient {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @NotBlank
-    String firstName;
+    private String firstName;
     @NotBlank
-    String LastName;
+    private String LastName;
     @AttributeOverrides({
             @AttributeOverride(name = "city",column = @Column(name = "HOME_CITY")),
             @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
@@ -47,48 +44,43 @@ public class Patient {
             @AttributeOverride(name = "postalCode", column = @Column(name = "HOME_POSTAL_CODE"))
     })
     @Valid
-    Address homeAddress;
+    private Address homeAddress;
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "CORRESPONDENCE_CITY")),
             @AttributeOverride(name = "street", column = @Column(name = "CORRESPONDENCE_STREET")),
             @AttributeOverride(name = "apartmentNo", column = @Column(name = "CORRESPONDENCE_APARTMENT_NO")),
             @AttributeOverride(name = "postalCode", column = @Column(name = "CORRESPONDENCE_POSTAL_CODE"))
     })
-    Address correspondenceAddress;
+    private Address correspondenceAddress;
     @PESEL
-    String pesel;
+    private String pesel;
     @Pattern(regexp = "^\\d{9}$", message = "Phone Number should have 9 numbers")
-    String phoneNumber;
+    private String phoneNumber;
     @Email
-    String email;
-    String job;
+    private String email;
+    private String job;
     @Enumerated(EnumType.STRING)
-    MaritalStatus maritalStatus;
+    private MaritalStatus maritalStatus;
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "CONTACT_PERSON_FIRST_NAME")),
             @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
     })
     @Valid
-    ContactPerson contactPerson;
-
+    private ContactPerson contactPerson;
     @OneToOne (mappedBy = "patient", orphanRemoval = true)
     @JsonManagedReference
-    HealthQuestionnaire healthQuestionnaire;
-
+    private HealthQuestionnaire healthQuestionnaire;
     @OneToMany(mappedBy = "patient", orphanRemoval = true)
     @JsonManagedReference
-    List<PatientObservationList> patientObservationLists;
-
+    private List<PatientObservationList> patientObservationLists;
     @ManyToOne
     @JoinColumn(name = "hospital_room_id")
-    HospitalRoom hospitalRoom;
-
+    private HospitalRoom hospitalRoom;
     @ManyToOne()
     @JoinColumn(name = "doctor_id")
-    Doctor doctor;
-
+    private Doctor doctor;
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 
 }

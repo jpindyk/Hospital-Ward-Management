@@ -14,9 +14,9 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class ContactPerson {
     @NotBlank
-    String firstName;
+    private String firstName;
     @NotBlank
-    String lastName;
+    private String lastName;
     @Pattern(regexp = "^\\d{9}$", message = "Phone Number should have 9 numbers")
-    String phoneNumber;
+    private String phoneNumber;
 }

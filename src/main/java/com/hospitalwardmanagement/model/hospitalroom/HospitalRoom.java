@@ -22,15 +22,15 @@ import java.util.Set;
 public class HospitalRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String name;
+    private Long id;
+    private String name;
     @Min(value = 3, message = "Hospital room must have at least 3 beds")
     @Max(value = 10, message = "Hospital room must have maximum 10 beds")
-    Integer capacity;
+    private Integer capacity;
     @OneToMany(mappedBy = "hospitalRoom")
     @JsonIgnore
-    Set<Patient> patients;
+    private Set<Patient> patients;
 
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 }

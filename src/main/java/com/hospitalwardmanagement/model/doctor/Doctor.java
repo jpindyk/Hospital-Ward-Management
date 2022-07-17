@@ -18,17 +18,17 @@ import java.util.Set;
 public class Doctor{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @NotBlank(message = "Doctor's first name should not be null or empty")
-    String firstName;
+    private String firstName;
     @NotBlank(message = "Doctor's last name should not be null or empty")
-    String lastName;
-    String specialization;
+    private String lastName;
+    private String specialization;
     @OneToMany (mappedBy = "doctor")
     @JsonIgnore
-    Set<Patient> patients;
+    private Set<Patient> patients;
 
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 
 }
