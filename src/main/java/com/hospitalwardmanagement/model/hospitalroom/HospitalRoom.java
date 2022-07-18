@@ -18,6 +18,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Table(
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})}
+)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class HospitalRoom {
     @Id
