@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/hq")
 public class HealthQuestionnaireController {
@@ -16,13 +18,13 @@ public class HealthQuestionnaireController {
     private HealthQuestionnaireService healthQuestionnaireService;
 
     @PostMapping
-    public ResponseEntity<HealthQuestionnaire> addHealthQuestionnaire (@RequestBody HealthQuestionnaireDTO healthQuestionnaireDTO,
+    public ResponseEntity<HealthQuestionnaire> addHealthQuestionnaire (@Valid @RequestBody HealthQuestionnaireDTO healthQuestionnaireDTO,
                                                                        @RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<>(healthQuestionnaireService.addHealthQuestionnaireWithPatientId(healthQuestionnaireDTO, patientId), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<HealthQuestionnaire> updateHealthQuestionnaire (@RequestBody HealthQuestionnaireDTO healthQuestionnaireDTO,
+    public ResponseEntity<HealthQuestionnaire> updateHealthQuestionnaire (@Valid @RequestBody HealthQuestionnaireDTO healthQuestionnaireDTO,
                                                                           @RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<>(healthQuestionnaireService.updateHealthQuestionnaireByPatientId(healthQuestionnaireDTO, patientId), HttpStatus.OK);
     }
