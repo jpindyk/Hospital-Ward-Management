@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/patients")
 public class PatientController {
     @Autowired
-    PatientService patientService;
+    private PatientService patientService;
 
     @PostMapping
     public ResponseEntity<Patient> addPatient(@Valid @RequestBody PatientDTO patientDTO) {

@@ -17,10 +17,10 @@ import java.util.List;
 public class PatientObservationListServiceImplementation implements PatientObservationListService {
 
     @Autowired
-    PatientObservationListRepository repository;
+    private PatientObservationListRepository repository;
 
     @Autowired
-    PatientRepository patientRepository;
+    private PatientRepository patientRepository;
 
     @Autowired
     private ModelMapper mapper;

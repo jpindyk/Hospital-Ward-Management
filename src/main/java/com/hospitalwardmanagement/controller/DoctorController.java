@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/doctors")
 public class DoctorController {
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @GetMapping("/{doctorId}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable Long doctorId) {

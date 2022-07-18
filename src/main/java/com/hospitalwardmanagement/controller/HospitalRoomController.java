@@ -16,7 +16,7 @@ import java.util.List;
 public class HospitalRoomController {
 
     @Autowired
-    HospitalRoomService hospitalRoomService;
+    private HospitalRoomService hospitalRoomService;
 
     @PostMapping
     public ResponseEntity<HospitalRoom> addHospitalRoom (@Valid @RequestBody HospitalRoomDTO hospitalRoomDTO) {

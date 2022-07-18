@@ -16,7 +16,7 @@ import java.util.List;
 public class PatientObservationListController {
 
     @Autowired
-    PatientObservationListService service;
+    private PatientObservationListService service;
 
     @PostMapping()
     public ResponseEntity<PatientObservationList> addPatientObservationList (@Valid @RequestBody PatientObservationListDTO patientObservationListDTO,

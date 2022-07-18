@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class HealthQuestionnaireController {
 
     @Autowired
-    HealthQuestionnaireService healthQuestionnaireService;
+    private HealthQuestionnaireService healthQuestionnaireService;
 
     @PostMapping
     public ResponseEntity<HealthQuestionnaire> addHealthQuestionnaire (@RequestBody HealthQuestionnaireDTO healthQuestionnaireDTO,
