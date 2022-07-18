@@ -1,6 +1,7 @@
 package com.hospitalwardmanagement.controller;
 
 import com.hospitalwardmanagement.model.patient.Patient;
+import com.hospitalwardmanagement.payload.PatientDTO;
 import com.hospitalwardmanagement.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +18,14 @@ public class PatientController {
     PatientService patientService;
 
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@Valid @RequestBody Patient patient) {
-        return new ResponseEntity<Patient>(patientService.addPatient(patient), HttpStatus.CREATED);
+    public ResponseEntity<Patient> addPatient(@Valid @RequestBody PatientDTO patientDTO) {
+        return new ResponseEntity<Patient>(patientService.addPatient(patientDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id,
-                                                 @RequestBody Patient patient) {
-        return new ResponseEntity<Patient>(patientService.updatePatientById(id, patient), HttpStatus.OK);
+                                                 @Valid @RequestBody PatientDTO patientDTO) {
+        return new ResponseEntity<Patient>(patientService.updatePatientById(id, patientDTO), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

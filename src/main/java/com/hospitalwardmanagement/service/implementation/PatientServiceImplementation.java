@@ -5,10 +5,12 @@ import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
 import com.hospitalwardmanagement.model.patient.Patient;
+import com.hospitalwardmanagement.payload.PatientDTO;
 import com.hospitalwardmanagement.repository.DoctorRepository;
 import com.hospitalwardmanagement.repository.HospitalRoomRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.PatientService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,25 +27,29 @@ public class PatientServiceImplementation implements PatientService {
     @Autowired
     HospitalRoomRepository hospitalRoomRepository;
 
+    @Autowired
+    ModelMapper mapper;
+
     @Override
-    public Patient addPatient(Patient patient) {
+    public Patient addPatient(PatientDTO patientDTO) {
+        Patient patient = mapToEntity(patientDTO);
         return patientRepository.save(patient);
     }
 
     @Override
-    public Patient updatePatientById(Long id, Patient patient) {
+    public Patient updatePatientById(Long id, PatientDTO patientDTO) {
         Patient existingPatient = getPatientById(id);
 
-        existingPatient.setFirstName(patient.getFirstName() == null ? existingPatient.getFirstName() : patient.getFirstName());
-        existingPatient.setLastName(patient.getLastName() == null ? existingPatient.getLastName() : patient.getLastName());
-        existingPatient.setHomeAddress(patient.getHomeAddress() == null ? existingPatient.getHomeAddress() : patient.getHomeAddress());
-        existingPatient.setCorrespondenceAddress(patient.getCorrespondenceAddress() == null ? existingPatient.getCorrespondenceAddress() : patient.getCorrespondenceAddress());
-        existingPatient.setPesel(patient.getPesel() == null ? existingPatient.getPesel() : patient.getPesel());
-        existingPatient.setPhoneNumber(patient.getPhoneNumber() == null ? existingPatient.getPhoneNumber() : patient.getPhoneNumber());
-        existingPatient.setEmail(patient.getEmail() == null ? existingPatient.getEmail() : patient.getEmail());
-        existingPatient.setJob(patient.getJob() == null ? existingPatient.getJob() : patient.getJob());
-        existingPatient.setMaritalStatus(patient.getMaritalStatus() == null ? existingPatient.getMaritalStatus() : patient.getMaritalStatus());
-        existingPatient.setContactPerson(patient.getContactPerson() == null ? existingPatient.getContactPerson() : patient.getContactPerson());
+        existingPatient.setFirstName(patientDTO.getFirstName() == null ? existingPatient.getFirstName() : patientDTO.getFirstName());
+        existingPatient.setLastName(patientDTO.getLastName() == null ? existingPatient.getLastName() : patientDTO.getLastName());
+        existingPatient.setHomeAddress(patientDTO.getHomeAddress() == null ? existingPatient.getHomeAddress() : patientDTO.getHomeAddress());
+        existingPatient.setCorrespondenceAddress(patientDTO.getCorrespondenceAddress() == null ? existingPatient.getCorrespondenceAddress() : patientDTO.getCorrespondenceAddress());
+        existingPatient.setPesel(patientDTO.getPesel() == null ? existingPatient.getPesel() : patientDTO.getPesel());
+        existingPatient.setPhoneNumber(patientDTO.getPhoneNumber() == null ? existingPatient.getPhoneNumber() : patientDTO.getPhoneNumber());
+        existingPatient.setEmail(patientDTO.getEmail() == null ? existingPatient.getEmail() : patientDTO.getEmail());
+        existingPatient.setJob(patientDTO.getJob() == null ? existingPatient.getJob() : patientDTO.getJob());
+        existingPatient.setMaritalStatus(patientDTO.getMaritalStatus() == null ? existingPatient.getMaritalStatus() : patientDTO.getMaritalStatus());
+        existingPatient.setContactPerson(patientDTO.getContactPerson() == null ? existingPatient.getContactPerson() : patientDTO.getContactPerson());
 
         return patientRepository.save(existingPatient);
     }
@@ -109,5 +115,10 @@ public class PatientServiceImplementation implements PatientService {
         patient.setDoctor(doctor);
         doctor.getPatients().add(patient);
         return patientRepository.save(patient);
+    }
+
+    private Patient mapToEntity (PatientDTO patientDTO) {
+        Patient patient = mapper.map(patientDTO, Patient.class);
+        return patient;
     }
 }
