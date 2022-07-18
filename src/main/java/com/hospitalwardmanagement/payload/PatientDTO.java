@@ -21,21 +21,11 @@ public class PatientDTO {
     @NotBlank
     private String LastName;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "city",column = @Column(name = "HOME_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
-            @AttributeOverride(name = "apartmentNo", column = @Column(name = "HOME_APARTMENT_NO")),
-            @AttributeOverride(name = "postalCode", column = @Column(name = "HOME_POSTAL_CODE"))
-    })
+
     @Valid
     private Address homeAddress;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "city", column = @Column(name = "CORRESPONDENCE_CITY")),
-            @AttributeOverride(name = "street", column = @Column(name = "CORRESPONDENCE_STREET")),
-            @AttributeOverride(name = "apartmentNo", column = @Column(name = "CORRESPONDENCE_APARTMENT_NO")),
-            @AttributeOverride(name = "postalCode", column = @Column(name = "CORRESPONDENCE_POSTAL_CODE"))
-    })
+
     private Address correspondenceAddress;
 
     @PESEL
@@ -49,14 +39,9 @@ public class PatientDTO {
 
     private String job;
 
-    @Enumerated(EnumType.STRING)
+
     private MaritalStatus maritalStatus;
 
-    @AttributeOverrides({
-            @AttributeOverride(name = "firstName", column = @Column(name = "CONTACT_PERSON_FIRST_NAME")),
-            @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
-            @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
-    })
     @Valid
     private ContactPerson contactPerson;
 }

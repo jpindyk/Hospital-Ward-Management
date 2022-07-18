@@ -29,7 +29,6 @@ public class HealthQuestionnaire {
 
     private Long height;
     private Long weight;
-    @NotBlank
     private String historyOfDiseases;
 
     @JsonIgnore

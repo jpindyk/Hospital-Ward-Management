@@ -27,8 +27,6 @@ public class HospitalRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Min(value = 3, message = "Hospital room must have at least 3 beds")
-    @Max(value = 10, message = "Hospital room must have maximum 10 beds")
     private Integer capacity;
     @OneToMany(mappedBy = "hospitalRoom")
     @JsonIgnore

@@ -33,9 +33,7 @@ public class Patient {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String firstName;
-    @NotBlank
     private String LastName;
     @AttributeOverrides({
             @AttributeOverride(name = "city",column = @Column(name = "HOME_CITY")),
@@ -43,7 +41,6 @@ public class Patient {
             @AttributeOverride(name = "apartmentNo", column = @Column(name = "HOME_APARTMENT_NO")),
             @AttributeOverride(name = "postalCode", column = @Column(name = "HOME_POSTAL_CODE"))
     })
-    @Valid
     private Address homeAddress;
     @AttributeOverrides({
             @AttributeOverride(name = "city", column = @Column(name = "CORRESPONDENCE_CITY")),
@@ -52,11 +49,8 @@ public class Patient {
             @AttributeOverride(name = "postalCode", column = @Column(name = "CORRESPONDENCE_POSTAL_CODE"))
     })
     private Address correspondenceAddress;
-    @PESEL
     private String pesel;
-    @Pattern(regexp = "^\\d{9}$", message = "Phone Number should have 9 numbers")
     private String phoneNumber;
-    @Email
     private String email;
     private String job;
     @Enumerated(EnumType.STRING)
@@ -66,7 +60,6 @@ public class Patient {
             @AttributeOverride(name = "lastName", column = @Column(name = "CONTACT_PERSON_LAST_NAME")),
             @AttributeOverride(name = "phoneNumber", column = @Column(name = "CONTACT_PERSON_PHONE_NUMBER"))
     })
-    @Valid
     private ContactPerson contactPerson;
     @OneToOne (mappedBy = "patient", orphanRemoval = true)
     @JsonManagedReference
