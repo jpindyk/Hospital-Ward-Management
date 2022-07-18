@@ -2,9 +2,11 @@ package com.hospitalwardmanagement.service.implementation;
 
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
+import com.hospitalwardmanagement.payload.HospitalRoomDTO;
 import com.hospitalwardmanagement.repository.HospitalRoomRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.HospitalRoomService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +20,21 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
     @Autowired
     PatientRepository patientRepository;
 
+    @Autowired
+    ModelMapper mapper;
 
     @Override
-    public HospitalRoom addHospitalRoom(HospitalRoom hospitalRoom) {
+    public HospitalRoom addHospitalRoom(HospitalRoomDTO hospitalRoomDTO) {
+        HospitalRoom hospitalRoom = mapToEntity(hospitalRoomDTO);
         return hospitalRoomRepository.save(hospitalRoom);
     }
 
     @Override
-    public HospitalRoom updateHospitalRoomById(Long id, HospitalRoom hospitalRoom) {
+    public HospitalRoom updateHospitalRoomById(Long id, HospitalRoomDTO hospitalRoomDTO) {
         HospitalRoom existingHospitalRoom = getHospitalRoomById(id);
 
-        existingHospitalRoom.setName(hospitalRoom.getName()==null ? existingHospitalRoom.getName() : hospitalRoom.getName());
-        existingHospitalRoom.setCapacity(hospitalRoom.getCapacity()==null ? existingHospitalRoom.getCapacity() : hospitalRoom.getCapacity());
+        existingHospitalRoom.setName(hospitalRoomDTO.getName()==null ? existingHospitalRoom.getName() : hospitalRoomDTO.getName());
+        existingHospitalRoom.setCapacity(hospitalRoomDTO.getCapacity()==null ? existingHospitalRoom.getCapacity() : hospitalRoomDTO.getCapacity());
 
         return hospitalRoomRepository.save(existingHospitalRoom);
     }
@@ -51,5 +56,10 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
     @Override
     public List<HospitalRoom> getAllHospitalRooms() {
         return hospitalRoomRepository.findAll();
+    }
+
+    public HospitalRoom mapToEntity (HospitalRoomDTO hospitalRoomDTO) {
+        HospitalRoom hospitalRoom = mapper.map(hospitalRoomDTO, HospitalRoom.class);
+        return hospitalRoom;
     }
 }

@@ -3,12 +3,15 @@ package com.hospitalwardmanagement.service.implementation;
 import com.hospitalwardmanagement.exceptions.HealthQuestionnaireExistsException;
 import com.hospitalwardmanagement.exceptions.ResourceNotExistForPatientException;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
+import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
-import com.hospitalwardmanagement.model.healthQuestionnaire.MedicalHistory;
 import com.hospitalwardmanagement.model.patient.Patient;
+import com.hospitalwardmanagement.payload.DoctorDTO;
+import com.hospitalwardmanagement.payload.HealthQuestionnaireDTO;
 import com.hospitalwardmanagement.repository.HealthQuestionnaireRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.HealthQuestionnaireService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,19 +26,18 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
     @Autowired
     PatientRepository patientRepository;
 
+    @Autowired
+    ModelMapper mapper;
+
     @Override
-    public HealthQuestionnaire addHealthQuestionnaireWithPatientId(HealthQuestionnaire healthQuestionnaire, Long patientId) {
+    public HealthQuestionnaire addHealthQuestionnaireWithPatientId(HealthQuestionnaireDTO healthQuestionnaireDTO, Long patientId) {
         Patient patient = getPatient(patientId);
 
         if (patient.getHealthQuestionnaire() != null)
             throw new HealthQuestionnaireExistsException(patientId);
 
-        HealthQuestionnaire newHealthQuestionnaire = healthQuestionnaire;
+        HealthQuestionnaire newHealthQuestionnaire = mapToEntity(healthQuestionnaireDTO);
         newHealthQuestionnaire.setPatient(patient);
-
-        newHealthQuestionnaire.getMedicalHistories().
-                forEach(medicalHistory -> medicalHistory
-                        .setHealthQuestionnaire(healthQuestionnaire));
 
         patient.setHealthQuestionnaire(newHealthQuestionnaire);
 
@@ -43,7 +45,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
     }
 
     @Override
-    public HealthQuestionnaire updateHealthQuestionnaireByPatientId(HealthQuestionnaire healthQuestionnaire, Long patientId) {
+    public HealthQuestionnaire updateHealthQuestionnaireByPatientId(HealthQuestionnaireDTO healthQuestionnaireDTO, Long patientId) {
         Patient patient = getPatient(patientId);
 
         if(patient.getHealthQuestionnaire()==null)
@@ -52,16 +54,10 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         Long existingHealthQuestionnaireId = patient.getHealthQuestionnaire().getId();
         HealthQuestionnaire existingHealthQuestionnaire = getHealthQuestionnaireById(existingHealthQuestionnaireId);
 
-        existingHealthQuestionnaire.setHeight(healthQuestionnaire.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaire.getHeight());
-        existingHealthQuestionnaire.setWeight(healthQuestionnaire.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaire.getWeight());
+        existingHealthQuestionnaire.setHeight(healthQuestionnaireDTO.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaireDTO.getHeight());
+        existingHealthQuestionnaire.setWeight(healthQuestionnaireDTO.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaireDTO.getWeight());
+        existingHealthQuestionnaire.setHistoryOfDiseases(healthQuestionnaireDTO.getHistoryOfDiseases());
 
-        int amountMH = healthQuestionnaire.getMedicalHistories().size();
-        if(healthQuestionnaire.getMedicalHistories().isEmpty()) {
-            existingHealthQuestionnaire.setMedicalHistories(existingHealthQuestionnaire.getMedicalHistories());
-        } else
-            for (int i = 0; i<amountMH; i++) {
-                existingHealthQuestionnaire.getMedicalHistories().get(i).setDisease(healthQuestionnaire.getMedicalHistories().get(i).getDisease());
-            }
         return questionnaireRepository.save(existingHealthQuestionnaire);
     }
 
@@ -99,4 +95,8 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         );
     }
 
+    private HealthQuestionnaire mapToEntity (HealthQuestionnaireDTO healthQuestionnaireDTO) {
+        HealthQuestionnaire healthQuestionnaire = mapper.map(healthQuestionnaireDTO, HealthQuestionnaire.class);
+        return healthQuestionnaire;
+    }
 }

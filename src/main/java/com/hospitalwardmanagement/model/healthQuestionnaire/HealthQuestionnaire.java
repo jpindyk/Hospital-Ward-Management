@@ -2,9 +2,7 @@ package com.hospitalwardmanagement.model.healthQuestionnaire;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hospitalwardmanagement.model.ObjectAudit;
-import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.patient.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,8 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @NoArgsConstructor
@@ -23,20 +20,18 @@ import java.util.Set;
 public class HealthQuestionnaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "patient_id")
     @JsonBackReference
-    Patient patient;
+    private Patient patient;
 
-    Long height;
-    Long weight;
-
-    @OneToMany(mappedBy = "healthQuestionnaire", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
-    List<MedicalHistory> medicalHistories;
+    private Long height;
+    private Long weight;
+    @NotBlank
+    private String historyOfDiseases;
 
     @JsonIgnore
-    ObjectAudit objectAudit = new ObjectAudit();
+    private ObjectAudit objectAudit = new ObjectAudit();
 }

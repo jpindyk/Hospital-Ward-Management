@@ -1,12 +1,14 @@
 package com.hospitalwardmanagement.controller;
 
 import com.hospitalwardmanagement.model.patientObservationList.PatientObservationList;
+import com.hospitalwardmanagement.payload.PatientObservationListDTO;
 import com.hospitalwardmanagement.service.PatientObservationListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,15 +19,15 @@ public class PatientObservationListController {
     PatientObservationListService service;
 
     @PostMapping()
-    public ResponseEntity<PatientObservationList> addPatientObservationList (@RequestBody PatientObservationList patientObservationList,
+    public ResponseEntity<PatientObservationList> addPatientObservationList (@Valid @RequestBody PatientObservationListDTO patientObservationListDTO,
                                                                              @RequestParam(name = "patient") Long patientId) {
-        return new ResponseEntity<PatientObservationList>(service.addPatientObservationList(patientObservationList, patientId), HttpStatus.CREATED);
+        return new ResponseEntity<PatientObservationList>(service.addPatientObservationList(patientObservationListDTO, patientId), HttpStatus.CREATED);
     }
 
     @PutMapping()
-    public ResponseEntity<PatientObservationList> updatePatientObservationList (@RequestBody PatientObservationList patientObservationList,
+    public ResponseEntity<PatientObservationList> updatePatientObservationList (@Valid @RequestBody PatientObservationListDTO patientObservationListDTO,
                                                                                 @RequestParam(name = "patient") Long patientId) {
-        return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(patientId, patientObservationList), HttpStatus.OK);
+        return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(patientId, patientObservationListDTO), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

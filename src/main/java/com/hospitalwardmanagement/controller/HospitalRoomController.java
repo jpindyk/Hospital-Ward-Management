@@ -1,6 +1,7 @@
 package com.hospitalwardmanagement.controller;
 
 import com.hospitalwardmanagement.model.hospitalroom.HospitalRoom;
+import com.hospitalwardmanagement.payload.HospitalRoomDTO;
 import com.hospitalwardmanagement.service.HospitalRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class HospitalRoomController {
     HospitalRoomService hospitalRoomService;
 
     @PostMapping
-    public ResponseEntity<HospitalRoom> addHospitalRoom (@Valid @RequestBody HospitalRoom hospitalRoom) {
-        return new ResponseEntity<HospitalRoom>(hospitalRoomService.addHospitalRoom(hospitalRoom), HttpStatus.CREATED);
+    public ResponseEntity<HospitalRoom> addHospitalRoom (@Valid @RequestBody HospitalRoomDTO hospitalRoomDTO) {
+        return new ResponseEntity<HospitalRoom>(hospitalRoomService.addHospitalRoom(hospitalRoomDTO), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -39,7 +40,7 @@ public class HospitalRoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HospitalRoom> updateHospitalRoomById (@PathVariable Long id, @RequestBody HospitalRoom hospitalRoom) {
-        return new ResponseEntity<HospitalRoom>(hospitalRoomService.updateHospitalRoomById(id, hospitalRoom), HttpStatus.OK);
+    public ResponseEntity<HospitalRoom> updateHospitalRoomById (@PathVariable Long id, @Valid @RequestBody HospitalRoomDTO hospitalRoomDTO) {
+        return new ResponseEntity<HospitalRoom>(hospitalRoomService.updateHospitalRoomById(id, hospitalRoomDTO), HttpStatus.OK);
     }
 }
