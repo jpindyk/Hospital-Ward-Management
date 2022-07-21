@@ -40,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                         WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject(
-                                        HttpStatus.CONTINUE.value(),
+                                        HttpStatus.CONFLICT.value(),
                                         exception.getMessage(),
                                         request.getDescription(false),
                                         new Date().toString()
@@ -56,7 +56,39 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                         WebRequest request) {
 
         ErrorObject errorObject = new ErrorObject(
-                                        HttpStatus.CONTINUE.value(),
+                                        HttpStatus.CONFLICT.value(),
+                                        exception.getMessage(),
+                                        request.getDescription(false),
+                                        new Date().toString()
+        );
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
+
+    }
+@ExceptionHandler(HospitalRoomFullException.class)
+    public ResponseEntity<ErrorObject>  handleHospitalRoomFullException(
+                                        ResourceNotExistForPatientException exception,
+                                        WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject(
+                                        HttpStatus.CONFLICT.value(),
+                                        exception.getMessage(),
+                                        request.getDescription(false),
+                                        new Date().toString()
+        );
+
+        return new ResponseEntity<ErrorObject>(errorObject, HttpStatus.CONFLICT);
+
+    }
+
+
+@ExceptionHandler(UserAlreadyRegistered.class)
+    public ResponseEntity<ErrorObject>  handleUserAlreadyRegisteredException(
+                                        ResourceNotExistForPatientException exception,
+                                        WebRequest request) {
+
+        ErrorObject errorObject = new ErrorObject(
+                                        HttpStatus.CONFLICT.value(),
                                         exception.getMessage(),
                                         request.getDescription(false),
                                         new Date().toString()
