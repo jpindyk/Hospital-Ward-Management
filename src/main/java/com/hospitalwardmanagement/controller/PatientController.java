@@ -6,6 +6,7 @@ import com.hospitalwardmanagement.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,11 +19,13 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN') || hasRole('REGISTRAR')")
     public ResponseEntity<Patient> addPatient(@Valid @RequestBody PatientDTO patientDTO) {
         return new ResponseEntity<Patient>(patientService.addPatient(patientDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('REGISTRAR')")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id,
                                                  @Valid @RequestBody PatientDTO patientDTO) {
         return new ResponseEntity<Patient>(patientService.updatePatientById(id, patientDTO), HttpStatus.OK);
@@ -54,13 +57,15 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE_WARD')")
     public ResponseEntity<Patient> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Patient> setHospitalRoomForPatient(@PathVariable Long id,
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE_WARD')")
+    public ResponseEntity<Patient> setHospitalRoomOrDoctorForPatient(@PathVariable Long id,
                                                              @RequestParam(required = false, name = "room") Long hospitalRoomId,
                                                              @RequestParam(required = false, name = "doctor") Long doctorId) {
         if (hospitalRoomId != null) {

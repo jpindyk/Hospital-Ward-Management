@@ -6,6 +6,7 @@ import com.hospitalwardmanagement.service.PatientObservationListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,12 +20,14 @@ public class PatientObservationListController {
     private PatientObservationListService service;
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE')")
     public ResponseEntity<PatientObservationList> addPatientObservationList (@Valid @RequestBody PatientObservationListDTO patientObservationListDTO,
                                                                              @RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<PatientObservationList>(service.addPatientObservationList(patientObservationListDTO, patientId), HttpStatus.CREATED);
     }
 
     @PutMapping()
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE')")
     public ResponseEntity<PatientObservationList> updatePatientObservationList (@Valid @RequestBody PatientObservationListDTO patientObservationListDTO,
                                                                                 @RequestParam(name = "patient") Long patientId) {
         return new ResponseEntity<PatientObservationList>(service.updatePatientObservationListById(patientId, patientObservationListDTO), HttpStatus.OK);
@@ -41,12 +44,14 @@ public class PatientObservationListController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE_WORD')")
     public ResponseEntity<PatientObservationList> deletePatientObservationList (@PathVariable Long id) {
         service.deletePatientObservationListById(id);
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
     }
 
     @DeleteMapping()
+    @PreAuthorize("hasRole('ADMIN') || hasRole('NURSE_WORD')")
     public ResponseEntity<PatientObservationList> deletePatientObservationListsByPatientId (@RequestParam(name = "patient") Long patientId) {
         service.deletePatientObservationListsByPatientId(patientId);
         return new ResponseEntity<PatientObservationList>(HttpStatus.OK);
