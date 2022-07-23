@@ -3,31 +3,30 @@ package com.hospitalwardmanagement.service.implementation;
 import com.hospitalwardmanagement.exceptions.HealthQuestionnaireExistsException;
 import com.hospitalwardmanagement.exceptions.ResourceNotExistForPatientException;
 import com.hospitalwardmanagement.exceptions.ResourceNotFoundException;
-import com.hospitalwardmanagement.model.doctor.Doctor;
 import com.hospitalwardmanagement.model.healthQuestionnaire.HealthQuestionnaire;
 import com.hospitalwardmanagement.model.patient.Patient;
-import com.hospitalwardmanagement.payload.DoctorDTO;
 import com.hospitalwardmanagement.payload.HealthQuestionnaireDTO;
 import com.hospitalwardmanagement.repository.HealthQuestionnaireRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.HealthQuestionnaireService;
+import com.hospitalwardmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class HealthQuestionnaireServiceImplementation implements HealthQuestionnaireService {
     @Autowired
-    HealthQuestionnaireRepository questionnaireRepository;
+    private HealthQuestionnaireRepository questionnaireRepository;
 
     @Autowired
-    PatientRepository patientRepository;
+    private PatientRepository patientRepository;
 
     @Autowired
-    ModelMapper mapper;
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public HealthQuestionnaire addHealthQuestionnaireWithPatientId(HealthQuestionnaireDTO healthQuestionnaireDTO, Long patientId) {
@@ -38,6 +37,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
 
         HealthQuestionnaire newHealthQuestionnaire = mapToEntity(healthQuestionnaireDTO);
         newHealthQuestionnaire.setPatient(patient);
+        newHealthQuestionnaire.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
 
         patient.setHealthQuestionnaire(newHealthQuestionnaire);
 
@@ -57,7 +57,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         existingHealthQuestionnaire.setHeight(healthQuestionnaireDTO.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaireDTO.getHeight());
         existingHealthQuestionnaire.setWeight(healthQuestionnaireDTO.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaireDTO.getWeight());
         existingHealthQuestionnaire.setHistoryOfDiseases(healthQuestionnaireDTO.getHistoryOfDiseases());
-
+        existingHealthQuestionnaire.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
         return questionnaireRepository.save(existingHealthQuestionnaire);
     }
 

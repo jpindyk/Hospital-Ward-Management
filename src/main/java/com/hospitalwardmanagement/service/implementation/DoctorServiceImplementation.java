@@ -6,6 +6,7 @@ import com.hospitalwardmanagement.payload.DoctorDTO;
 import com.hospitalwardmanagement.repository.DoctorRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.DoctorService;
+import com.hospitalwardmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +17,22 @@ import java.util.List;
 public class DoctorServiceImplementation implements DoctorService {
 
     @Autowired
-    DoctorRepository doctorRepository;
+    private DoctorRepository doctorRepository;
 
     @Autowired
-    PatientRepository patientRepository;
+    private PatientRepository patientRepository;
 
     @Autowired
-    ModelMapper mapper;
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper mapper;
 
 
     @Override
     public Doctor addDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = mapToEntity(doctorDTO);
+        doctor.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
         return doctorRepository.save(doctor);
     }
 
@@ -37,6 +42,7 @@ public class DoctorServiceImplementation implements DoctorService {
         existingDoctor.setFirstName(doctorDTO.getFirstName());
         existingDoctor.setLastName(doctorDTO.getLastName());
         existingDoctor.setSpecialization(doctorDTO.getSpecialization() == null ? existingDoctor.getSpecialization() : doctorDTO.getSpecialization());
+        existingDoctor.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
 
         return doctorRepository.save(existingDoctor);
     }

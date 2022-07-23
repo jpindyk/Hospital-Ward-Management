@@ -6,6 +6,7 @@ import com.hospitalwardmanagement.payload.HospitalRoomDTO;
 import com.hospitalwardmanagement.repository.HospitalRoomRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.HospitalRoomService;
+import com.hospitalwardmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,21 @@ import java.util.List;
 public class HospitalRoomServiceImplementation implements HospitalRoomService {
 
     @Autowired
-    HospitalRoomRepository hospitalRoomRepository;
+    private HospitalRoomRepository hospitalRoomRepository;
 
     @Autowired
-    PatientRepository patientRepository;
+    private PatientRepository patientRepository;
 
     @Autowired
-    ModelMapper mapper;
+    private ModelMapper mapper;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public HospitalRoom addHospitalRoom(HospitalRoomDTO hospitalRoomDTO) {
         HospitalRoom hospitalRoom = mapToEntity(hospitalRoomDTO);
+        hospitalRoom.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
         return hospitalRoomRepository.save(hospitalRoom);
     }
 
@@ -35,6 +40,7 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
 
         existingHospitalRoom.setName(hospitalRoomDTO.getName()==null ? existingHospitalRoom.getName() : hospitalRoomDTO.getName());
         existingHospitalRoom.setCapacity(hospitalRoomDTO.getCapacity()==null ? existingHospitalRoom.getCapacity() : hospitalRoomDTO.getCapacity());
+        existingHospitalRoom.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
 
         return hospitalRoomRepository.save(existingHospitalRoom);
     }

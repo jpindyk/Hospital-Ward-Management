@@ -7,6 +7,7 @@ import com.hospitalwardmanagement.payload.PatientObservationListDTO;
 import com.hospitalwardmanagement.repository.PatientObservationListRepository;
 import com.hospitalwardmanagement.repository.PatientRepository;
 import com.hospitalwardmanagement.service.PatientObservationListService;
+import com.hospitalwardmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class PatientObservationListServiceImplementation implements PatientObser
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public PatientObservationList addPatientObservationList(PatientObservationListDTO patientObservationListDTO, Long patientId) {
         Patient patient = getPatient(patientId);
@@ -32,6 +36,7 @@ public class PatientObservationListServiceImplementation implements PatientObser
 
         patient.getPatientObservationLists().add(patientObservationList);
         patientObservationList.setPatient(patient);
+        patientObservationList.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
         return repository.save(patientObservationList);
     }
 
@@ -48,6 +53,7 @@ public class PatientObservationListServiceImplementation implements PatientObser
         existingPatientObservationList.setShortSummary(
                 patientObservationListDTO.getShortSummary()==null ? existingPatientObservationList.getShortSummary() : patientObservationListDTO.getShortSummary()
         );
+        existingPatientObservationList.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
 
         return repository.save(existingPatientObservationList);
 
