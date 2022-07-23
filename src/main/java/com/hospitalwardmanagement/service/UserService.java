@@ -7,7 +7,8 @@ public interface UserService {
     User createUser (UserDTO userDTO);
     User updateUser(UserDTO userDTO);
     void deleteUser(String email);
-
     User getUserByEmail(String email);
+
+    User getLoggedInUser();
 
 }

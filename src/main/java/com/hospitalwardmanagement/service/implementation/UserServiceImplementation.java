@@ -10,6 +10,8 @@ import com.hospitalwardmanagement.repository.UserRepository;
 import com.hospitalwardmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,7 @@ public class UserServiceImplementation implements UserService {
     private PasswordEncoder bcryptEncoder;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Override
     public User createUser(UserDTO userDTO) {
@@ -39,7 +41,7 @@ public class UserServiceImplementation implements UserService {
         User user = mapToEntity(userDTO);
         user.setPassword(bcryptEncoder.encode(userDTO.getPassword()));
 
-        UserRole roles = roleRepository.findByName("ROLE_NURSE").get();
+        UserRole roles = roleRepository.findByName("ROLE_ADMIN").get();
         user.setRoles(Collections.singleton(roles));
 
         return userRepository.save(user);
@@ -67,6 +69,14 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByEmail(email).orElseThrow(
                 ()-> new ResourceNotFoundException("User", "email", email)
         );
+    }
+
+    @Override
+    public User getLoggedInUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        return getUserByEmail(email);
     }
 
     private User mapToEntity (UserDTO userDTO) {
