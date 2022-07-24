@@ -12,28 +12,34 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PutMapping("/updateUser")
+    @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> updateUser (@Valid @RequestBody UserDTO userDTO) {
-        return new ResponseEntity<User>(userService.updateUser(userDTO), HttpStatus.OK);
+    public ResponseEntity<User> updateUser (@RequestParam String email, @Valid @RequestBody UserDTO userDTO) {
+        return new ResponseEntity<User>(userService.updateUser(email, userDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteUser")
+    @DeleteMapping("/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> deleteUserByEmail (@RequestParam String email) {
         userService.deleteUser(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/user")
+    @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserByEmail  (@RequestParam String email) {
         return new ResponseEntity<User>(userService.getUserByEmail(email), HttpStatus.OK);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> setRole (@RequestParam String email, @RequestParam int roleId) {
+        return new ResponseEntity<User>(userService.setRole(email, roleId), HttpStatus.OK);
     }
 
 
