@@ -28,13 +28,8 @@ public class ObjectAudit {
     }
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn
-    @JsonIgnore
-    private User createdByUser;
+    @Column(nullable = false)
+    private Long createdByUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @JsonIgnore
-    private User lastChangeByUser;
+    private Long lastChangeByUser;
 }

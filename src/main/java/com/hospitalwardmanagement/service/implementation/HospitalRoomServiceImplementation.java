@@ -30,7 +30,7 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
     @Override
     public HospitalRoom addHospitalRoom(HospitalRoomDTO hospitalRoomDTO) {
         HospitalRoom hospitalRoom = mapToEntity(hospitalRoomDTO);
-        hospitalRoom.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
+        hospitalRoom.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getId());
         return hospitalRoomRepository.save(hospitalRoom);
     }
 
@@ -40,7 +40,7 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
 
         existingHospitalRoom.setName(hospitalRoomDTO.getName()==null ? existingHospitalRoom.getName() : hospitalRoomDTO.getName());
         existingHospitalRoom.setCapacity(hospitalRoomDTO.getCapacity()==null ? existingHospitalRoom.getCapacity() : hospitalRoomDTO.getCapacity());
-        existingHospitalRoom.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
+        existingHospitalRoom.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getId());
 
         return hospitalRoomRepository.save(existingHospitalRoom);
     }

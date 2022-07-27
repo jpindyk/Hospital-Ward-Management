@@ -32,7 +32,7 @@ public class DoctorServiceImplementation implements DoctorService {
     @Override
     public Doctor addDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = mapToEntity(doctorDTO);
-        doctor.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
+        doctor.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getId());
         return doctorRepository.save(doctor);
     }
 
@@ -42,7 +42,7 @@ public class DoctorServiceImplementation implements DoctorService {
         existingDoctor.setFirstName(doctorDTO.getFirstName());
         existingDoctor.setLastName(doctorDTO.getLastName());
         existingDoctor.setSpecialization(doctorDTO.getSpecialization() == null ? existingDoctor.getSpecialization() : doctorDTO.getSpecialization());
-        existingDoctor.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
+        existingDoctor.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getId());
 
         return doctorRepository.save(existingDoctor);
     }

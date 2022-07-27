@@ -8,6 +8,7 @@ public interface UserService {
     User updateUser(String email, UserDTO userDTO);
     void deleteUser(String email);
     User getUserByEmail(String email);
+    User getUserById(Long id);
     User getLoggedInUser();
     User setRole(String email, int roleId);
 

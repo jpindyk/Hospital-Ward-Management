@@ -42,14 +42,17 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User updateUser(String email, UserDTO userDTO) {
-        User existingUser = getUserByEmail(email);
+        User loggedUser = getLoggedInUser();
+        if(!(loggedUser.getEmail()==email)) {
+            throw new ResourceNotFoundException("Logged user", "email", email);
+        }
 
-        existingUser.setFirstName(userDTO.getFirstName());
-        existingUser.setLastName(userDTO.getLastName());
-        existingUser.setEmail(userDTO.getEmail());
-        existingUser.setPassword(bcryptEncoder.encode(userDTO.getPassword()));
+        loggedUser.setFirstName(userDTO.getFirstName());
+        loggedUser.setLastName(userDTO.getLastName());
+        loggedUser.setEmail(userDTO.getEmail());
+        loggedUser.setPassword(bcryptEncoder.encode(userDTO.getPassword()));
 
-        return userRepository.save(existingUser);
+        return userRepository.save(loggedUser);
     }
 
     @Override
@@ -62,6 +65,13 @@ public class UserServiceImplementation implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(
                 () -> new ResourceNotFoundException("User", "email", email)
+        );
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", id)
         );
     }
 

@@ -10,11 +10,11 @@ import javax.persistence.*;
 
 
 public enum UserRole {
-    ROLE_ADMIN(1),
-    ROLE_NURSE_WARD(2),
-    ROLE_NURSE(3),
-    ROLE_REGISTRAR(4),
-    ROLE_DEFAULT_USER(5);
+    ROLE_ADMIN(0),
+    ROLE_NURSE_WARD(1),
+    ROLE_NURSE(2),
+    ROLE_REGISTRAR(3),
+    ROLE_DEFAULT_USER(4);
 
     UserRole(int nr) {
         this.nr = nr;

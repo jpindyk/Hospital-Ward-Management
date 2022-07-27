@@ -37,7 +37,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
 
         HealthQuestionnaire newHealthQuestionnaire = mapToEntity(healthQuestionnaireDTO);
         newHealthQuestionnaire.setPatient(patient);
-        newHealthQuestionnaire.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
+        newHealthQuestionnaire.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getId());
 
         patient.setHealthQuestionnaire(newHealthQuestionnaire);
 
@@ -57,7 +57,7 @@ public class HealthQuestionnaireServiceImplementation implements HealthQuestionn
         existingHealthQuestionnaire.setHeight(healthQuestionnaireDTO.getHeight() == null ? existingHealthQuestionnaire.getHeight() : healthQuestionnaireDTO.getHeight());
         existingHealthQuestionnaire.setWeight(healthQuestionnaireDTO.getWeight() == null ? existingHealthQuestionnaire.getWeight() : healthQuestionnaireDTO.getWeight());
         existingHealthQuestionnaire.setHistoryOfDiseases(healthQuestionnaireDTO.getHistoryOfDiseases());
-        existingHealthQuestionnaire.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
+        existingHealthQuestionnaire.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getId());
         return questionnaireRepository.save(existingHealthQuestionnaire);
     }
 

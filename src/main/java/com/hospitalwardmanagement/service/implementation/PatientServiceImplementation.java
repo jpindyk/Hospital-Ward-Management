@@ -37,7 +37,7 @@ public class PatientServiceImplementation implements PatientService {
     @Override
     public Patient addPatient(PatientDTO patientDTO) {
         Patient patient = mapToEntity(patientDTO);
-        patient.getObjectAudit().setCreatedByUser(userService.getLoggedInUser());
+        patient.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getId());
         return patientRepository.save(patient);
     }
 
@@ -55,7 +55,7 @@ public class PatientServiceImplementation implements PatientService {
         existingPatient.setJob(patientDTO.getJob() == null ? existingPatient.getJob() : patientDTO.getJob());
         existingPatient.setMaritalStatus(patientDTO.getMaritalStatus() == null ? existingPatient.getMaritalStatus() : patientDTO.getMaritalStatus());
         existingPatient.setContactPerson(patientDTO.getContactPerson() == null ? existingPatient.getContactPerson() : patientDTO.getContactPerson());
-        existingPatient.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser());
+        existingPatient.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getId());
 
         return patientRepository.save(existingPatient);
     }

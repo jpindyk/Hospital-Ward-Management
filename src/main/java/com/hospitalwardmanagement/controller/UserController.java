@@ -18,7 +18,6 @@ public class UserController {
     UserService userService;
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateUser (@RequestParam String email, @Valid @RequestBody UserDTO userDTO) {
         return new ResponseEntity<User>(userService.updateUser(email, userDTO), HttpStatus.OK);
     }
@@ -34,6 +33,11 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserByEmail  (@RequestParam String email) {
         return new ResponseEntity<User>(userService.getUserByEmail(email), HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> getUserByID  (@PathVariable Long id) {
+        return new ResponseEntity<User>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping
