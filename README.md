@@ -1,4 +1,4 @@
-## Hotel Ward Management (Backend)
+## Hospital Ward Management (Backend)
 
 Project of an application for managing the hospital wards, which allows logged user to register patients, conduct surveys on past diseases, add daily observations or assign the attending doctor and the hospital room.
 The availability of the above-mentioned options depends on the permissions of user (available: Registrar, Nurse, Ward Nurse, Admin)
