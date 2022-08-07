@@ -47,7 +47,7 @@ public class HospitalRoomServiceImplementation implements HospitalRoomService {
 
     @Override
     public void deleteHospitalRoomById(Long id) {
-        patientRepository.findByHospitalRoom(id).stream().forEach(p->p.setHospitalRoom(null));
+        patientRepository.findByHospitalRoom(id).forEach(p->p.setHospitalRoom(null));
         HospitalRoom hospitalRoomToDelete = getHospitalRoomById(id);
         hospitalRoomRepository.delete(hospitalRoomToDelete);
     }
