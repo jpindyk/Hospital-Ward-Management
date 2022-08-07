@@ -6,7 +6,16 @@ The availability of the above-mentioned options depends on the permissions of us
 ### Technologies
 
 Project are done in Java 11 with Spring Boot version 2.6.8, using Maven, Spring Data JPA, Hibernate, Spring Security and Lombok.
-Database based on MySQL.
+Application and database based on MySQL and launched on Amazon Web Services.
+### How To Use
 
+Application is deployed on AWS Cloud using Elastic Beanstalk Service, address: http://hospitalwardmanagement-env.eba-zacfez6f.eu-central-1.elasticbeanstalk.com/
+To test the application you can use e.g. Postman, ready-made request for Postman set are available here:
+https://drive.google.com/file/d/1iTBq25BZVRe_72IaaHLRbG4kHUoyemzr/view?usp=sharing
 
-
+In database is added one user with admin role, sign in is available with data below:
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
