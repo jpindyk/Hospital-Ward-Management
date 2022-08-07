@@ -36,7 +36,7 @@ public class PatientObservationListServiceImplementation implements PatientObser
 
         patient.getPatientObservationLists().add(patientObservationList);
         patientObservationList.setPatient(patient);
-        patientObservationList.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getId());
+        patientObservationList.getObjectAudit().setCreatedByUser(userService.getLoggedInUser().getEmail());
         return repository.save(patientObservationList);
     }
 
@@ -53,7 +53,7 @@ public class PatientObservationListServiceImplementation implements PatientObser
         existingPatientObservationList.setShortSummary(
                 patientObservationListDTO.getShortSummary()==null ? existingPatientObservationList.getShortSummary() : patientObservationListDTO.getShortSummary()
         );
-        existingPatientObservationList.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getId());
+        existingPatientObservationList.getObjectAudit().setLastChangeByUser(userService.getLoggedInUser().getEmail());
 
         return repository.save(existingPatientObservationList);
 

@@ -29,7 +29,7 @@ public class ObjectAudit {
 
 
     @Column(nullable = false)
-    private Long createdByUser;
+    private String createdByUser;
 
-    private Long lastChangeByUser;
+    private String lastChangeByUser;
 }
