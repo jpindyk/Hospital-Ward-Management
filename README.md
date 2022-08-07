@@ -14,8 +14,7 @@ To test the application you can use e.g. Postman, ready-made request for Postman
 https://drive.google.com/file/d/1iTBq25BZVRe_72IaaHLRbG4kHUoyemzr/view?usp=sharing
 
 In database is added one user with admin role, sign in is available with data below:
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| Tables        | Are           |
+| ------------- |:-------------:|
+| admin@hwm.pl  | admin123      | 
+
